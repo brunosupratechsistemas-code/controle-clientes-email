@@ -1,0 +1,28 @@
+name: 📊 Relatório Mensal SupraTech
+
+on:
+  schedule:
+    - cron: "0 12 1 * *" # dia 01 às 09h Brasil (UTC+3)
+  workflow_dispatch:
+
+jobs:
+  gerar-relatorio:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Instalar dependências
+        run: npm install firebase-admin nodemailer chartjs-node-canvas
+
+      - name: Executar relatório
+        run: node scripts/relatorio-mensal.js
+        env:
+          FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
