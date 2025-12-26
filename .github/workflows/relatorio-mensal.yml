@@ -21,7 +21,7 @@ jobs:
         run: npm install firebase-admin nodemailer chartjs-node-canvas
 
       - name: Executar relatório
-        run: node scripts/relatorio-mensal.js
+        run: node scripts/relatorio.js
         env:
           FIREBASE_SERVICE_ACCOUNT_JSON: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
           EMAIL_USER: ${{ secrets.EMAIL_USER }}
