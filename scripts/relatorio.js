@@ -5,15 +5,15 @@ const { ChartJSNodeCanvas } = require("chartjs-node-canvas");
 
 // ====== ENV ======
 const FIREBASE_SERVICE_ACCOUNT_JSON = process.env.FIREBASE_SERVICE_ACCOUNT_JSON; // JSON inteiro como string
-const MAIL_USER = process.env.MAIL_USER;
-const MAIL_PASS = process.env.MAIL_PASS;
+const EMAIL_USER = process.env.EMAIL_USER;
+const EMAIL_PASS = process.env.EMAIL_PASS;
 
 if (!FIREBASE_SERVICE_ACCOUNT_JSON) {
   console.error("Faltou FIREBASE_SERVICE_ACCOUNT_JSON");
   process.exit(1);
 }
 if (!MAIL_USER || !MAIL_PASS) {
-  console.error("Faltou MAIL_USER / MAIL_PASS");
+  console.error("Faltou EMAIL_USER / EMAIL_PASS");
   process.exit(1);
 }
 
@@ -218,3 +218,4 @@ function montarHTMLRelatorio({ mesLabel, porSuporte, totaisGerais }) {
 
   console.log("✅ Relatório enviado para:", adminEmails.join(", "));
 })();
+
