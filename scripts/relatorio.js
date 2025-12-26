@@ -12,7 +12,7 @@ if (!FIREBASE_SERVICE_ACCOUNT_JSON) {
   console.error("Faltou FIREBASE_SERVICE_ACCOUNT_JSON");
   process.exit(1);
 }
-if (!MAIL_USER || !MAIL_PASS) {
+if (!EMAIL_USER || !EMAIL_PASS) {
   console.error("Faltou EMAIL_USER / EMAIL_PASS");
   process.exit(1);
 }
@@ -218,4 +218,5 @@ function montarHTMLRelatorio({ mesLabel, porSuporte, totaisGerais }) {
 
   console.log("✅ Relatório enviado para:", adminEmails.join(", "));
 })();
+
 
