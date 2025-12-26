@@ -203,7 +203,7 @@ function montarHTMLRelatorio({ mesLabel, porSuporte, totaisGerais }) {
   const subject = `📊 Resumo de Atividades – ${mesLabel} | SupraTech`;
 
   await transporter.sendMail({
-    from: `SupraTech Relatórios <${MAIL_USER}>`,
+    from: `SupraTech Relatórios <${EMAIL_USER}>`,
     to: adminEmails.join(","),
     subject,
     html: html + `<p><b>📈 Gráfico (anexo)</b></p>`,
@@ -218,6 +218,7 @@ function montarHTMLRelatorio({ mesLabel, porSuporte, totaisGerais }) {
 
   console.log("✅ Relatório enviado para:", adminEmails.join(", "));
 })();
+
 
 
 
