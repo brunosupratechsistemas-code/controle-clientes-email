@@ -52,6 +52,22 @@ async function getAdminEmails() {
   return [...new Set(emails)];
 }
 
+async function carregarMapaSuportes() {
+  const snap = await db.collection("users").get();
+  const mapa = {};
+
+  snap.forEach((doc) => {
+    const u = doc.data() || {};
+    mapa[doc.id] = {
+      nome: u.name || u.displayName || "",
+      email: u.email || ""
+    };
+  });
+
+  return mapa;
+}
+
+
 async function gerarGraficoPNG(totais) {
   const width = 900;
   const height = 500;
@@ -139,6 +155,7 @@ function montarHTMLRelatorio({ mesLabel, porSuporte, totaisGerais }) {
 (async () => {
   const mesRef = getMesAnteriorRef();
   const mesLabel = formatarMes(mesRef);
+const mapaSuportes = await carregarMapaSuportes();
 
   // Busca atividades do mês anterior
   const snap = await db
@@ -170,17 +187,20 @@ function montarHTMLRelatorio({ mesLabel, porSuporte, totaisGerais }) {
 
     if (totaisGerais[tipo] === undefined) return;
 
-    if (!porSuporte[a.suporteId]) {
-      porSuporte[a.suporteId] = {
-        id: a.suporteId,
-        nome: a.suporteNome || "",
-        email: a.suporteEmail || "",
-        APRESENTACAO: 0,
-        TREINAMENTO: 0,
-        MIGRACAO: 0,
-        PARAMETRIZACAO: 0,
-      };
-    }
+if (!porSuporte[a.suporteId]) {
+  const info = mapaSuportes[a.suporteId] || {};
+
+  porSuporte[a.suporteId] = {
+    id: a.suporteId,
+    nome: info.nome || a.suporteNome || "Suporte",
+    email: info.email || a.suporteEmail || "",
+    APRESENTACAO: 0,
+    TREINAMENTO: 0,
+    MIGRACAO: 0,
+    PARAMETRIZACAO: 0,
+  };
+}
+
 
     porSuporte[a.suporteId][tipo] += 1;
     totaisGerais[tipo] += 1;
@@ -218,6 +238,7 @@ function montarHTMLRelatorio({ mesLabel, porSuporte, totaisGerais }) {
 
   console.log("✅ Relatório enviado para:", adminEmails.join(", "));
 })();
+
 
 
 
