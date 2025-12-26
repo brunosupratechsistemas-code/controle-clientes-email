@@ -197,7 +197,7 @@ function montarHTMLRelatorio({ mesLabel, porSuporte, totaisGerais }) {
 
   const transporter = nodemailer.createTransport({
     service: "gmail",
-    auth: { user: MAIL_USER, pass: MAIL_PASS },
+    auth: { user: EMAIL_USER, pass: EMAIL_PASS },
   });
 
   const subject = `📊 Resumo de Atividades – ${mesLabel} | SupraTech`;
@@ -218,5 +218,6 @@ function montarHTMLRelatorio({ mesLabel, porSuporte, totaisGerais }) {
 
   console.log("✅ Relatório enviado para:", adminEmails.join(", "));
 })();
+
 
 
